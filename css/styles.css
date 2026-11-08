@@ -1,0 +1,100 @@
+/* ===== Vellar — estilos complementares ao Tailwind ===== */
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+body { overflow-x: hidden; }
+::selection { background: #C5A880; color: #0D0D0D; }
+
+/* Brilho de fundo do hero */
+.hero-glow {
+  position: absolute; inset: -20% -40% auto; height: 80%;
+  background: radial-gradient(closest-side, rgba(197,168,128,.18), transparent 70%);
+  pointer-events: none;
+}
+
+/* Entrada do hero (fade-in) */
+.reveal-hero { opacity: 0; transform: translateY(12px); animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--d, 0ms); }
+@keyframes fadeUp { to { opacity: 1; transform: none; } }
+
+/* Revelação no scroll */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+.scroll-cue { animation: bob 2.4s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+
+/* Micro-interação de toque */
+.tap { transition: transform .15s ease, opacity .2s ease, background-color .3s ease, border-color .3s ease, color .3s ease; }
+.tap:active { transform: scale(.96); }
+
+/* Ondas do player */
+.wave span { width: 3px; height: 30%; border-radius: 2px; background: #C5A880; opacity: .5; }
+.wave.playing span { animation: wave 1s ease-in-out infinite; opacity: 1; }
+.wave.playing span:nth-child(2) { animation-delay: .15s; }
+.wave.playing span:nth-child(3) { animation-delay: .3s; }
+.wave.playing span:nth-child(4) { animation-delay: .45s; }
+@keyframes wave { 0%,100% { height: 25%; } 50% { height: 100%; } }
+
+/* Seletor segmentado */
+.seg-indicator { transition: transform .45s cubic-bezier(.65,0,.35,1); }
+.seg-indicator.right { transform: translateX(100%); }
+.seg-btn { color: #8E8E93; }
+.seg-btn[aria-selected="true"] { color: #0D0D0D; }
+
+/* Carrosséis */
+.carousel { scrollbar-width: none; scroll-padding-inline: 1.5rem; }
+.carousel::-webkit-scrollbar { display: none; }
+.carousel.fade-swap { animation: swap .5s ease; }
+@keyframes swap { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+
+/* Flechas sobrepostas aos cards */
+.carousel-nav {
+  position: absolute; z-index: 10; width: 40px; height: 40px; margin-top: -20px;
+  display: grid; place-items: center; border-radius: 999px;
+  color: #E5D9C5; background: rgba(13,13,13,.65);
+  border: 1px solid rgba(229,217,197,.25);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,.6);
+}
+.carousel-nav:hover { background: #E5D9C5; color: #0D0D0D; border-color: #E5D9C5; }
+.carousel-nav.is-hidden { opacity: 0; pointer-events: none; }
+
+.benefit-card { transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease; }
+.benefit-card:hover { transform: translateY(-4px); border-color: rgba(197,168,128,.5); box-shadow: 0 16px 40px -20px rgba(197,168,128,.35); }
+
+.product-card .photo { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.product-card:hover .photo { transform: scale(1.05); }
+
+.dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(229,217,197,.2); transition: all .3s ease; }
+.dot.active { width: 18px; background: #C5A880; }
+
+/* Brilho no CTA */
+.cta-shine::after {
+  content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: skewX(-20deg); animation: shine 4s ease-in-out infinite;
+}
+@keyframes shine { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+
+.social-link:hover { border-color: rgba(197,168,128,.6); color: #E5D9C5; }
+
+/* Concierge */
+.concierge { animation: fadeUp .6s ease 1.2s both; }
+.concierge:hover { border-color: #C5A880; }
+
+/* Toast */
+.toast { opacity: 0; pointer-events: none; transform: translate(-50%, 10px); transition: all .35s ease; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ===== Placeholders fotográficos (substituir por fotos reais em /assets/img) ===== */
+.photo { background-size: cover; background-position: center; }
+.photo-1 { background-image: radial-gradient(circle at 30% 35%, #d9c3a0 0 6%, transparent 7%), radial-gradient(circle at 65% 60%, rgba(197,168,128,.5), transparent 40%), linear-gradient(135deg, #e8dccb, #b9a78b); }
+.photo-2 { background-image: radial-gradient(ellipse at 70% 30%, rgba(255,240,215,.35), transparent 45%), linear-gradient(160deg, #2a2622, #121110); }
+.photo-3 { background-image: radial-gradient(ellipse at 50% 40%, rgba(197,168,128,.35), transparent 55%), linear-gradient(180deg, #2b2620, #0D0D0D); }
+.photo-4 { background-image: radial-gradient(circle at 50% 50%, transparent 18%, rgba(197,168,128,.9) 19% 21%, transparent 22%), linear-gradient(140deg, #d8ccba, #9c8b73); }
+.photo-5 { background-image: radial-gradient(ellipse at 35% 65%, rgba(229,217,197,.3), transparent 50%), linear-gradient(200deg, #3a342d, #161412); }
+.photo-6 { background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 2px, transparent 2px 6px), linear-gradient(120deg, #cdbfa9, #8a7a63); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .reveal-hero { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
