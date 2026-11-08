@@ -45,6 +45,30 @@ body { overflow-x: hidden; }
 .carousel.fade-swap { animation: swap .5s ease; }
 @keyframes swap { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
 
+/* Rótulos e atalhos */
+.eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .4em; color: #C5A880; }
+.chips { scrollbar-width: none; padding-bottom: 2px; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex-shrink: 0; border: 1px solid rgba(229,217,197,.18); border-radius: 999px; padding: .5rem 1rem; font-size: 12px; color: #E5D9C5; background: rgba(26,26,26,.7); }
+.chip:hover { border-color: #C5A880; color: #F4EFEA; }
+
+/* Níveis da comunidade: MEMBRO → VIP → BLACK → PRIME */
+.tier { flex-shrink: 0; border-radius: 999px; padding: 2px 10px; font-size: 10px; font-weight: 600; letter-spacing: .2em; border: 1px solid; white-space: nowrap; }
+.tier-MEMBRO { color: #8E8E93; border-color: rgba(142,142,147,.5); }
+.tier-VIP    { color: #C5A880; border-color: rgba(197,168,128,.6); }
+.tier-BLACK  { color: #F4EFEA; border-color: #F4EFEA; background: #0D0D0D; }
+.tier-PRIME  { color: #0D0D0D; border-color: transparent; background: linear-gradient(120deg, #F3DEB0, #C5A880 55%, #E8CC92); }
+
+/* Conteúdos bloqueados */
+.content-card.is-locked [data-media] { filter: grayscale(.6) brightness(.7); }
+.content-card, .reel-card, .link-row { transition: transform .35s ease, border-color .35s ease; }
+.content-card:hover, .link-row:hover { transform: translateY(-3px); border-color: rgba(197,168,128,.45); }
+.reel-card:hover [data-media] { border-color: rgba(197,168,128,.5); }
+.reel-card img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.reel-card:hover img { transform: scale(1.05); }
+
+section[id], footer[id] { scroll-margin-top: 12px; }
+
 /* Flechas sobrepostas aos cards */
 .carousel-nav {
   position: absolute; z-index: 10; width: 40px; height: 40px; margin-top: -20px;

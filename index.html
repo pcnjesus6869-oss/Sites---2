@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0D0D0D" />
   <title>Vellar | Comunidade</title>
-  <meta name="description" content="Experiência exclusiva para membros Vellar Semijoias. Superação como estilo de vida." />
+  <meta name="description" content="Experiência exclusiva para membros Vellar. Superação como estilo de vida." />
 
-  <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -18,18 +17,8 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            obsidian: '#0D0D0D',
-            sand: '#E5D9C5',
-            gold: '#C5A880',
-            charcoal: '#1A1A1A',
-            beige: '#F4EFEA',
-            smoke: '#8E8E93',
-          },
-          fontFamily: {
-            serif: ['Cinzel', 'Playfair Display', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
+          colors: { obsidian: '#0D0D0D', sand: '#E5D9C5', gold: '#C5A880', charcoal: '#1A1A1A', beige: '#F4EFEA', smoke: '#8E8E93' },
+          fontFamily: { serif: ['Cinzel', 'Playfair Display', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] },
         },
       },
     };
@@ -39,11 +28,10 @@
 
 <body class="bg-obsidian text-beige font-sans antialiased">
 
-  <!-- ================= HEADER / HERO ================= -->
-  <header class="relative min-h-[92svh] flex flex-col items-center justify-center px-6 pt-16 pb-12 overflow-hidden">
+  <!-- ================= HERO ================= -->
+  <header class="relative flex flex-col items-center px-6 pt-14 pb-10 overflow-hidden text-center">
     <div class="hero-glow" aria-hidden="true"></div>
 
-    <!-- Logo VR -->
     <div class="reveal-hero" style="--d:0ms">
       <svg class="w-20 h-20 mx-auto" viewBox="0 0 100 100" fill="none" aria-label="VR Vellar">
         <circle cx="50" cy="50" r="47" stroke="#C5A880" stroke-width="1" />
@@ -51,12 +39,10 @@
         <text x="50" y="60" text-anchor="middle" font-family="Cinzel, serif" font-size="30" fill="#E5D9C5" letter-spacing="2">VR</text>
       </svg>
     </div>
+    <h1 class="reveal-hero mt-5 font-serif text-4xl tracking-[0.35em] text-sand pl-[0.35em]" style="--d:150ms">VELLAR</h1>
+    <p class="reveal-hero mt-2 text-[11px] uppercase tracking-[0.4em] text-smoke" style="--d:250ms">Superação como estilo de vida</p>
 
-    <h1 class="reveal-hero mt-6 font-serif text-4xl tracking-[0.35em] text-sand pl-[0.35em]" style="--d:150ms">VELLAR</h1>
-    <p class="reveal-hero mt-2 text-[11px] uppercase tracking-[0.4em] text-smoke" style="--d:250ms">Semijoias · Comunidade</p>
-
-    <!-- Badge de validação -->
-    <div class="reveal-hero mt-8 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-charcoal/70 px-4 py-2 backdrop-blur" style="--d:400ms">
+    <div class="reveal-hero mt-7 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-charcoal/70 px-4 py-2 backdrop-blur" style="--d:400ms">
       <span class="relative flex h-2 w-2">
         <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60"></span>
         <span class="relative inline-flex h-2 w-2 rounded-full bg-gold"></span>
@@ -64,63 +50,72 @@
       <span class="text-[10px] sm:text-[11px] text-sand tracking-wide whitespace-nowrap">Acesso Exclusivo para Membros <span class="text-gold/60 mx-1">|</span> QR Code Validado</span>
     </div>
 
-    <!-- Player de áudio minimalista -->
-    <div class="reveal-hero mt-10 w-full max-w-sm" style="--d:550ms">
-      <div class="rounded-2xl border border-sand/10 bg-charcoal p-4 flex items-center gap-4">
-        <button id="audioBtn" class="tap shrink-0 grid place-items-center w-12 h-12 rounded-full bg-sand text-obsidian" aria-label="Reproduzir áudio de boas-vindas">
-          <svg id="iconPlay" class="w-5 h-5 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          <svg id="iconPause" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-        </button>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm text-beige truncate">Boas-vindas do fundador</p>
-          <p class="text-[11px] text-smoke">Sua peça e a filosofia Vellar</p>
-          <div class="mt-2 flex items-center gap-2">
-            <div id="audioBar" class="relative flex-1 h-1 rounded-full bg-sand/10 cursor-pointer">
-              <div id="audioProgress" class="absolute inset-y-0 left-0 w-0 rounded-full bg-gold"></div>
-            </div>
-            <span id="audioTime" class="text-[10px] tabular-nums text-smoke">0:00</span>
-          </div>
-        </div>
-        <!-- Ondas animadas -->
-        <div id="wave" class="wave flex items-end gap-[3px] h-6" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
-        </div>
+    <!-- Atalhos para as seções -->
+    <nav class="reveal-hero mt-8 self-stretch -mx-6" style="--d:550ms" aria-label="Seções">
+      <div class="chips flex gap-2 overflow-x-auto px-6 justify-start sm:justify-center">
+        <a href="#sobre" class="chip tap">Sobre nós</a>
+        <a href="#conteudos" class="chip tap">Conteúdos</a>
+        <a href="#bastidores" class="chip tap">Bastidores</a>
+        <a href="#parceiros" class="chip tap">Parceiros</a>
+        <a href="#promocoes" class="chip tap">Promoções</a>
+        <a href="#links" class="chip tap">Contato</a>
       </div>
-      <!-- Substitua pelo arquivo real do fundador -->
-      <audio id="welcomeAudio" preload="metadata" src="assets/audio/boas-vindas.mp3"></audio>
-    </div>
-
-    <a href="#manifesto" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-smoke/70 scroll-cue" aria-label="Rolar para o manifesto">
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
-    </a>
+    </nav>
   </header>
 
   <main>
 
-    <!-- ================= BLOCO 1: MANIFESTO ================= -->
-    <section id="manifesto" class="px-6 py-20 max-w-xl mx-auto text-center">
-      <p class="reveal text-[11px] uppercase tracking-[0.4em] text-gold">O Manifesto</p>
-      <div class="reveal mx-auto my-6 h-px w-12 bg-gold/50"></div>
-      <h2 class="reveal font-serif text-[28px] leading-snug text-sand">
-        Superação como estilo de vida.<br />
-        <span class="text-beige/90">Menos excesso.</span> <span class="text-gold">Mais presença.</span>
-      </h2>
-      <p class="reveal mt-8 text-[15px] leading-relaxed text-smoke">
-        A peça que você acabou de receber não é apenas um adorno. É um lembrete diário do seu compromisso
-        com a própria evolução. Cada detalhe foi pensado para acompanhar quem escolhe crescer com
-        disciplina, elegância e propósito. Use-a como símbolo do seu próximo passo.
-      </p>
+    <!-- ================= 1. SOBRE NÓS (áudio ou vídeo) ================= -->
+    <section id="sobre" class="px-6 pt-6 pb-16 max-w-xl mx-auto">
+      <p class="reveal eyebrow">Sobre nós</p>
+      <h2 class="reveal mt-3 font-serif text-2xl text-sand" id="aboutTitle"></h2>
+      <p class="reveal mt-2 text-sm text-smoke" id="aboutSubtitle"></p>
+
+      <!-- O player é montado pelo js/app.js conforme o tipo configurado em js/data.js (mp3 ou mp4) -->
+      <div id="aboutPlayer" class="reveal mt-6"></div>
+
+      <p class="reveal mt-6 text-[15px] leading-relaxed text-smoke" id="aboutText"></p>
     </section>
 
-    <!-- ================= BLOCO 2: COMUNIDADE & PASSAPORTE ================= -->
-    <section id="comunidade" class="py-16 bg-gradient-to-b from-obsidian via-charcoal/40 to-obsidian">
+    <!-- ================= 2. CONTEÚDOS EXCLUSIVOS DA SEMANA ================= -->
+    <section id="conteudos" class="py-16 bg-gradient-to-b from-obsidian via-charcoal/40 to-obsidian">
       <div class="px-6 max-w-xl mx-auto">
-        <p class="reveal text-[11px] uppercase tracking-[0.4em] text-gold">Passaporte de Benefícios</p>
-        <h2 class="reveal mt-3 font-serif text-2xl text-sand">Sua Comunidade</h2>
-        <p class="reveal mt-2 text-sm text-smoke">Escolha sua comunidade e desbloqueie vantagens com parceiros locais.</p>
+        <p class="reveal eyebrow" id="contentMonth"></p>
+        <h2 class="reveal mt-3 font-serif text-2xl text-sand">Conteúdos exclusivos</h2>
+        <p class="reveal mt-2 text-sm text-smoke" id="contentIntro"></p>
+      </div>
+      <div class="carousel-wrap relative mt-6">
+        <div id="contentTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
+      </div>
+    </section>
 
-        <!-- Seletor -->
-        <div class="reveal mt-6 relative grid grid-cols-2 rounded-full border border-sand/15 bg-charcoal p-1" role="tablist">
+    <!-- ================= 3. BASTIDORES (Instagram) ================= -->
+    <section id="bastidores" class="py-16">
+      <div class="px-6 max-w-xl mx-auto flex items-end justify-between gap-4">
+        <div>
+          <p class="reveal eyebrow">Bastidores</p>
+          <h2 class="reveal mt-3 font-serif text-2xl text-sand">Por trás da Vellar</h2>
+        </div>
+        <a id="bastidoresAll" href="#" target="_blank" rel="noopener" class="reveal tap shrink-0 text-xs text-gold underline underline-offset-4">Ver no Instagram</a>
+      </div>
+      <div class="carousel-wrap relative mt-6">
+        <div id="bastidoresTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
+      </div>
+    </section>
+
+    <!-- ================= 4. EMPRESAS PARCEIRAS ================= -->
+    <section id="parceiros" class="py-16 bg-gradient-to-b from-obsidian via-charcoal/40 to-obsidian">
+      <div class="px-6 max-w-xl mx-auto">
+        <p class="reveal eyebrow">Empresas Parceiras</p>
+        <h2 class="reveal mt-3 font-serif text-2xl text-sand">Parceiro Vellar, vantagem para você</h2>
+        <p class="reveal mt-2 text-sm text-smoke">Empresas que vivem a mesma sintonia da Vellar. Membros têm acesso ao que o público geral não tem.</p>
+
+        <!-- Parceiro em destaque -->
+        <article id="featuredPartner" class="reveal mt-8 rounded-2xl overflow-hidden border border-gold/25 bg-charcoal"></article>
+
+        <!-- Seletor de comunidade -->
+        <h3 class="reveal mt-12 font-serif text-lg text-sand">Mais parceiros na sua comunidade</h3>
+        <div class="reveal mt-4 relative grid grid-cols-2 rounded-full border border-sand/15 bg-charcoal p-1" role="tablist">
           <span id="segIndicator" class="seg-indicator absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-sand"></span>
           <button class="seg-btn tap relative z-10 py-2.5 text-sm font-medium" role="tab" data-community="masculina" aria-selected="true">♂ Masculina</button>
           <button class="seg-btn tap relative z-10 py-2.5 text-sm font-medium" role="tab" data-community="feminina" aria-selected="false">♀ Feminina</button>
@@ -128,85 +123,44 @@
         <p id="communityTags" class="mt-3 text-center text-[11px] tracking-wide text-smoke"></p>
       </div>
 
-      <!-- Carrossel de benefícios -->
-      <div class="mt-6">
-        <div class="relative">
-          <div id="benefitsTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
-          <button class="carousel-nav tap left-3" style="top:calc(50% - 8px)" data-target="benefitsTrack" data-dir="-1" aria-label="Benefício anterior">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
-          </button>
-          <button class="carousel-nav tap right-3" style="top:calc(50% - 8px)" data-target="benefitsTrack" data-dir="1" aria-label="Próximo benefício">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-        <div id="benefitsDots" class="flex justify-center gap-1.5 mt-2"></div>
+      <div class="carousel-wrap relative mt-5">
+        <div id="benefitsTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
       </div>
 
-      <div class="px-6 max-w-xl mx-auto mt-8">
+      <div class="px-6 max-w-xl mx-auto mt-6">
         <a id="whatsCommunity" href="#" target="_blank" rel="noopener"
            class="tap cta-shine relative overflow-hidden flex items-center justify-center gap-2.5 w-full rounded-full bg-sand px-4 py-4 text-sm sm:text-[15px] whitespace-nowrap text-obsidian font-semibold">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>
-          <span id="whatsCommunityLabel">Entrar na Comunidade no WhatsApp</span>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>
+          <span>Entrar na Comunidade no WhatsApp</span>
         </a>
       </div>
     </section>
 
-    <!-- ================= BLOCO 3: COLEÇÃO ATIVA ================= -->
-    <section id="colecao" class="py-16">
+    <!-- ================= 5. PROMOÇÕES EXCLUSIVAS (QR Code) ================= -->
+    <section id="promocoes" class="py-16">
       <div class="px-6 max-w-xl mx-auto">
-        <p class="reveal text-[11px] uppercase tracking-[0.4em] text-gold">Narrativa do Mês</p>
-        <h2 class="reveal mt-3 font-serif text-2xl text-sand">Coleção Presença</h2>
-        <p class="reveal mt-2 text-sm text-smoke">O silêncio que fortalece. Uma reflexão sobre estar inteiro em cada escolha.</p>
-
-        <!-- Vídeo destaque -->
-        <div class="reveal mt-6 relative aspect-[4/5] rounded-2xl overflow-hidden border border-sand/10 bg-charcoal">
-          <video id="campaignVideo" class="absolute inset-0 w-full h-full object-cover" playsinline preload="none"
-                 poster="assets/img/campanha-poster.svg" src="assets/video/campanha.mp4"></video>
-          <div id="videoCover" class="absolute inset-0 photo photo-3 flex flex-col justify-end p-6" style="background-image:url('assets/img/campanha-poster.svg')">
-            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent"></div>
-            <button id="videoBtn" class="tap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-16 h-16 rounded-full border border-sand/40 bg-obsidian/40 backdrop-blur text-sand" aria-label="Assistir vídeo da campanha">
-              <svg class="w-6 h-6 ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <div class="relative">
-              <span class="inline-block rounded-full bg-gold/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Campanha</span>
-              <p class="mt-3 font-serif text-xl text-sand">Menos ruído. Mais você.</p>
-              <p class="text-xs text-smoke mt-1">2:40 · Psicologia & Espiritualidade</p>
-            </div>
-          </div>
+        <p class="reveal eyebrow">Promoções Exclusivas · Vellar Semijoias</p>
+        <h2 class="reveal mt-3 font-serif text-2xl text-sand">Só para quem escaneou</h2>
+        <p class="reveal mt-2 text-sm text-smoke">Condições válidas apenas por este QR Code. Use o cupom ao finalizar pelo WhatsApp.</p>
+        <div class="reveal mt-4 inline-flex items-center gap-2 rounded-full border border-sand/15 bg-charcoal px-3.5 py-1.5 text-xs text-sand">
+          <svg class="w-3.5 h-3.5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Termina em <strong id="promoCountdown" class="font-semibold tabular-nums">—</strong></span>
         </div>
       </div>
-
-      <!-- Vitrine -->
-      <div class="px-6 max-w-xl mx-auto mt-12">
-        <h3 class="reveal font-serif text-lg text-sand">Complete sua presença</h3>
-      </div>
-      <div class="relative mt-5">
-        <div id="productsTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
-        <button class="carousel-nav tap left-3" style="top:var(--img-mid, 35%)" data-target="productsTrack" data-dir="-1" aria-label="Peça anterior">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>
-        </button>
-        <button class="carousel-nav tap right-3" style="top:var(--img-mid, 35%)" data-target="productsTrack" data-dir="1" aria-label="Próxima peça">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
+      <div class="carousel-wrap relative mt-6">
+        <div id="promoTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
       </div>
     </section>
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="border-t border-sand/10 px-6 pt-12 pb-28 text-center">
-    <p class="font-serif tracking-[0.3em] text-sand pl-[0.3em]">VELLAR</p>
-    <p class="mt-2 text-xs text-smoke">Garantia, trocas e cuidados com suas peças: fale com nosso Concierge.</p>
-    <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a href="https://instagram.com/vellar.semijoias" target="_blank" rel="noopener" class="tap social-link inline-flex items-center gap-2 rounded-full border border-sand/15 px-4 py-2 text-sm text-beige">
-        <svg class="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
-        @vellar.semijoias
-      </a>
-      <a href="https://instagram.com/comunidade.vellar" target="_blank" rel="noopener" class="tap social-link inline-flex items-center gap-2 rounded-full border border-sand/15 px-4 py-2 text-sm text-beige">
-        <svg class="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
-        @comunidade.vellar
-      </a>
+  <!-- ================= 6. LINKS: REDES E WHATSAPP ================= -->
+  <footer id="links" class="border-t border-sand/10 px-6 pt-14 pb-28">
+    <div class="max-w-xl mx-auto text-center">
+      <p class="font-serif tracking-[0.3em] text-sand pl-[0.3em]">VELLAR</p>
+      <p class="mt-3 font-serif text-lg text-beige/90">Para quem escolheu não ficar parado.</p>
+      <div id="linksList" class="mt-8 flex flex-col gap-3 text-left"></div>
+      <p class="mt-10 text-[10px] uppercase tracking-[0.3em] text-smoke/60">© <span id="year"></span> Vellar Semijoias · Produtos que carregam histórias</p>
     </div>
-    <p class="mt-8 text-[10px] uppercase tracking-[0.3em] text-smoke/60">© <span id="year"></span> Vellar Semijoias</p>
   </footer>
 
   <!-- Botão flutuante Concierge -->
@@ -214,13 +168,23 @@
      class="tap fixed z-50 right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] flex items-center gap-2 rounded-full bg-charcoal/90 border border-gold/40 pl-3 pr-4 py-3 shadow-2xl backdrop-blur concierge"
      aria-label="Falar com o Concierge no WhatsApp">
     <span class="grid place-items-center w-8 h-8 rounded-full bg-gold text-obsidian">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>
     </span>
     <span class="text-sm text-sand font-medium">Concierge</span>
   </a>
 
-  <!-- Toast -->
   <div id="toast" class="toast fixed left-1/2 bottom-24 z-50 -translate-x-1/2 rounded-full bg-sand px-5 py-2.5 text-sm font-medium text-obsidian shadow-xl"></div>
+
+  <!-- Ícones reutilizáveis -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="6.5" r="1.1"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path d="M16.5 3c.3 2.1 1.6 3.6 3.5 3.9v3a7 7 0 0 1-3.5-1.1v6.1A5.9 5.9 0 1 1 10.6 9v3.1a2.9 2.9 0 1 0 2.9 2.9V3h3z"/></symbol>
+    <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  </svg>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
