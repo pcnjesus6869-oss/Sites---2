@@ -32,21 +32,36 @@ window.VELLAR = {
     title: 'Quem está por trás da Vellar',
     subtitle: 'Thiago Alves · fundador',
     label: 'Uma mensagem para você',
-    text: 'A Vellar nasceu de uma ideia simples: evoluir é uma escolha diária. A peça que você recebeu é o símbolo físico dessa escolha, e a Comunidade é onde ela ganha força, com pessoas, parceiros e experiências que fazem você avançar.',
+    // Blocos "quem somos" exibidos abaixo do player (resumo do texto oficial da marca).
+    blocks: [
+      {
+        label: 'Vellar Semijoias',
+        title: 'Peças com identidade',
+        text: 'Semijoias e acessórios que transmitem beleza, elegância, personalidade e autenticidade. Mais do que vender peças, a Vellar se aproxima de você com coleções, lançamentos, conteúdos e experiências.',
+      },
+      {
+        label: 'Comunidade Vellar',
+        title: 'Uma rede para crescer junto',
+        text: 'Um ambiente que conecta pessoas, marcas, empresas e empreendedores. Pelo Instagram e pelos grupos de WhatsApp, compartilhamos conhecimento, divulgamos parceiros e criamos oportunidades, em uma rede onde todos contribuem e evoluem.',
+        tags: ['Saúde', 'Bem-estar', 'Psicologia', 'Desenvolvimento pessoal', 'Propósito de vida', 'Empreendedorismo'],
+      },
+    ],
   },
 
   /* ---------- 2. Conteúdos exclusivos da semana ----------
    * release: data de liberação (AAAA-MM-DD). Antes dela, o card aparece bloqueado.
    * url: link do conteúdo (vídeo, áudio, post). Vazio = "link em breve".       */
   contents: {
-    month: 'Novembro · Espiritualidade',
-    intro: 'Um conteúdo novo por semana, só para membros. A história antes da coleção.',
+    // Ciclo de PSICOLOGIA (funil do Projeto Vellar: identificação antes da venda).
+    // Datas e duração dos vídeos são EXEMPLO — ajustar ao calendário real de gravação.
+    month: 'Psicologia · Thiago Alves',
+    intro: 'Um conteúdo novo por semana, só para membros. Mente, foco e a coragem de funcionar do seu jeito.',
     items: [
-      { week: 'Semana 1', stage: 'Introdução',     title: 'Como a espiritualidade começou a fazer parte da minha vida?', format: 'Vídeo · 6 min', release: '2026-11-02', url: '' },
-      { week: 'Semana 2', stage: 'Experiência',    title: 'O que a espiritualidade mudou na minha forma de enxergar a vida?', format: 'Vídeo · 7 min', release: '2026-11-09', url: '' },
-      { week: 'Semana 3', stage: 'Aprofundamento', title: 'Como a espiritualidade tem me ajudado a cuidar de mim e da minha vida?', format: 'Áudio · 9 min', release: '2026-11-16', url: '' },
-      { week: 'Semana 4', stage: 'Conceito',       title: 'Existe algo que representa aquilo que eu acredito e a pessoa que estou me tornando.', format: 'Vídeo · 5 min', release: '2026-11-23', url: '' },
-      { week: 'Fim do mês', stage: 'Lançamento',   title: 'Coleção Conceito Espiritualidade', format: 'Acesso antecipado para membros', release: '2026-11-30', url: '' },
+      { week: 'Semana 1', stage: 'Identificação',   title: 'Como eu descobri que funcionava diferente?', format: 'Vídeo · 6 min', release: '2026-11-12', url: '' },
+      { week: 'Semana 2', stage: 'Aprofundamento',  title: 'O que ninguém me contou sobre construir uma empresa tendo TDAH?', format: 'Vídeo · 7 min', release: '2026-11-19', url: '' },
+      { week: 'Semana 3', stage: 'História pessoal', title: 'O que eu aprendi sobre aceitar minha própria forma de funcionar?', format: 'Áudio · 9 min', release: '2026-11-26', url: '' },
+      { week: 'Semana 4', stage: 'Conceito',        title: 'Eu transformei tudo isso em algo que quero carregar comigo.', format: 'Vídeo · 5 min', release: '2026-12-03', url: '' },
+      { week: 'Fim do ciclo', stage: 'Lançamento',  title: 'Coleção Foco', format: 'Acesso antecipado para membros', release: '2026-12-10', url: '' },
     ],
   },
 
@@ -65,19 +80,57 @@ window.VELLAR = {
     ],
   },
 
+  /* ---------- Sorteio (parceria) ----------
+   * drawDate: data do sorteio (AAAA-MM-DD). Vazio = "data em breve".
+   * steps: como participar — regras são EXEMPLO, confirmar com a Vellar e a Criare. */
+  raffle: {
+    title: 'Sorteio Vellar × Criare',
+    prize: 'Uma peça Vellar Semijoias + um travesseiro Criare de brinde',
+    text: 'Para quem cuida do corpo, da mente e do descanso. Uma peça para carregar com você e um travesseiro para noites melhores.',
+    // Fotos que se alternam no card (a cada 4 s). position = parte da foto que aparece.
+    images: [
+      { src: 'assets/img/produtos/colar-ponto-de-luz.jpg', position: 'center' },   // EXEMPLO — trocar pela peça sorteada
+      { src: 'assets/img/parceiros/promo-travesseiros.jpg', position: 'center 80%' }, // enquadra só os travesseiros
+    ],
+    // O sorteio acontece somente pelo Instagram (sem botão de WhatsApp).
+    drawDate: '',                          // AAAA-MM-DD; vazio = mostra drawNote
+    drawNote: 'acompanhe o Instagram',
+    steps: [
+      'Você já é membro: escaneou o QR Code da sua caixa.',
+      'Siga @vellar.semijoias e @criarecolchoeseacessorios no Instagram.',
+    ],
+  },
+
   /* ---------- 4. Empresas parceiras ---------- */
-  // FICTÍCIO — parceiro de exemplo em destaque
   featuredPartner: {
-    name: 'Casa Ofício',
-    segment: 'Café de especialidade · Ateliê · Encontros',
-    city: 'Rua das Palmeiras, 210 · Centro',
-    cover: 'assets/img/parceiro-casa-oficio.svg',
-    story: 'Um espaço para desacelerar, criar e conversar sem pressa. Café torrado na casa, mesa compartilhada e encontros mensais sobre propósito e carreira. A mesma sintonia da Vellar: menos excesso, mais presença.',
+    name: 'Criare Colchões',
+    segment: 'Colchões · Camas · Enxoval',
+    city: 'Rua Amazonas, 3815 · Garcia · Blumenau',
+    cover: '',   // foto de capa do parceiro (ex.: 'assets/img/parceiros/criare-colchao-cloud.webp'); vazio = a promoção ocupa o topo
+    whatsapp: '5547992156344',   // WhatsApp da própria Criare
+    instagram: 'https://www.instagram.com/criarecolchoeseacessorios/',
+    msg: 'Olá! Sou membro da Comunidade Vellar e vim pelo QR Code.',
+    aboutTitle: 'Sobre a Criare',
+    // Texto oficial "Sobre a Criare" (enviado pela loja).
+    story: [
+      'A Criare Colchões acredita que cada pessoa merece noites mais confortáveis e momentos de descanso que contribuam para o seu bem-estar.',
+      'Nosso compromisso é oferecer uma experiência de compra diferenciada, com atendimento personalizado, atenção aos detalhes e soluções que valorizam o conforto de cada cliente.',
+      'Queremos fazer parte da sua casa, proporcionando mais aconchego, qualidade e bem-estar para você e sua família.',
+    ],
+    // Promoção de travesseiros — EM DESTAQUE no topo do card, sem valores
+    // (a condição é passada na loja/WhatsApp da Criare).
+    promo: {
+      highlight: true,   // true = a promoção abre o card do parceiro, com a arte em tamanho grande
+      label: 'Promoção exclusiva para membros',
+      title: 'Travesseiro não é tudo igual. É tudo pessoal.',
+      text: 'Descubra qual é o seu tipo de descanso e qual travesseiro foi feito pra você. Membros da Comunidade Vellar têm condição especial em travesseiros na Criare.',
+      image: 'assets/img/parceiros/promo-travesseiros.jpg',
+      cta: 'Consultar condição',
+      msg: 'Olá! Sou membro da Comunidade Vellar e quero saber da promoção de travesseiros.',
+    },
     perks: [
-      { tier: 'MEMBRO', type: 'Brinde',           text: 'Café coado cortesia na primeira visita' },
-      { tier: 'MEMBRO', type: 'Desconto',         text: '15% OFF de segunda a quarta' },
-      { tier: 'VIP',    type: 'Acesso antecipado', text: 'Inscrição antes de todos nos workshops do mês' },
-      { tier: 'BLACK',  type: 'Experiência',      text: 'Degustação privada de cafés para 2 pessoas' },
+      { tier: 'MEMBRO', type: 'Promoção', text: 'Condição especial em travesseiros' },
+      { tier: 'MEMBRO', type: 'Sorteio',  text: 'Travesseiro de brinde no sorteio Vellar × Criare' },
     ],
   },
 

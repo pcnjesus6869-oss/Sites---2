@@ -56,6 +56,7 @@
         <a href="#sobre" class="chip tap">Sobre nós</a>
         <a href="#conteudos" class="chip tap">Conteúdos</a>
         <a href="#bastidores" class="chip tap">Bastidores</a>
+        <a href="#sorteio" class="chip tap">Sorteio</a>
         <a href="#parceiros" class="chip tap">Parceiros</a>
         <a href="#promocoes" class="chip tap">Promoções</a>
         <a href="#links" class="chip tap">Contato</a>
@@ -74,7 +75,8 @@
       <!-- O player é montado pelo js/app.js conforme o tipo configurado em js/data.js (mp3 ou mp4) -->
       <div id="aboutPlayer" class="reveal mt-6"></div>
 
-      <p class="reveal mt-6 text-[15px] leading-relaxed text-smoke" id="aboutText"></p>
+      <!-- Blocos "Vellar Semijoias" e "Comunidade Vellar" (VELLAR.about.blocks) -->
+      <div class="reveal mt-6 space-y-3" id="aboutText"></div>
     </section>
 
     <!-- ================= 2. CONTEÚDOS EXCLUSIVOS DA SEMANA ================= -->
@@ -101,6 +103,13 @@
       <div class="carousel-wrap relative mt-6">
         <div id="bastidoresTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
       </div>
+    </section>
+
+    <!-- ================= SORTEIO (parceria) ================= -->
+    <section id="sorteio" class="px-6 py-16 max-w-xl mx-auto">
+      <p class="reveal eyebrow">Sorteio exclusivo</p>
+      <!-- Montado pelo js/app.js a partir de VELLAR.raffle -->
+      <article id="raffle" class="reveal mt-4 rounded-2xl overflow-hidden border border-gold/40 bg-charcoal"></article>
     </section>
 
     <!-- ================= 4. EMPRESAS PARCEIRAS ================= -->

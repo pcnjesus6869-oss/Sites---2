@@ -22,7 +22,14 @@
     const a = D.about;
     $('#aboutTitle').textContent = a.title;
     $('#aboutSubtitle').textContent = a.subtitle;
-    $('#aboutText').textContent = a.text;
+    const blocks = a.blocks || (a.text ? [{ text: a.text }] : []);
+    $('#aboutText').innerHTML = blocks.map((b) => `
+      <article class="rounded-2xl border border-sand/10 bg-charcoal/60 p-5">
+        ${b.label ? `<p class="text-[11px] uppercase tracking-[0.25em] text-gold">${esc(b.label)}</p>` : ''}
+        ${b.title ? `<h3 class="mt-2 font-serif text-lg text-sand">${esc(b.title)}</h3>` : ''}
+        <p class="mt-2 text-[15px] leading-relaxed text-beige/80">${esc(b.text)}</p>
+        ${b.tags ? `<div class="mt-4 flex flex-wrap gap-1.5">${b.tags.map((t) => `<span class="rounded-full border border-gold/30 px-2.5 py-1 text-[11px] text-sand">${esc(t)}</span>`).join('')}</div>` : ''}
+      </article>`).join('');
     const box = $('#aboutPlayer');
     if (a.type === 'video') renderVideoPlayer(box, a); else renderAudioPlayer(box, a);
   }
@@ -185,18 +192,110 @@
   /* ================= 4. PARCEIROS ================= */
   const tierBadge = (t) => `<span class="tier tier-${esc(t)}">${esc(t)}</span>`;
 
+  // Link de WhatsApp para um número específico (ex.: o do parceiro)
+  const waTo = (num, msg) => `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+
+  /* ================= SORTEIO ================= */
+  function renderRaffle() {
+    const r = D.raffle;
+    if (!r) { $('#sorteio').remove(); return; }
+    const when = r.drawDate
+      ? new Date(`${r.drawDate}T12:00:00-03:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' })
+      : (r.drawNote || 'em breve');
+    const imgs = r.images || (r.image ? [{ src: r.image }] : []);
+    $('#raffle').innerHTML = `
+      <div class="relative aspect-[4/3] overflow-hidden" aria-label="Fotos do prêmio">
+        ${imgs.map((im, i) => `<div class="raffle-slide photo absolute inset-0 ${i === 0 ? 'is-on' : ''}" style="background-image:url('${esc(im.src)}');background-position:${esc(im.position || 'center')}"></div>`).join('')}
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/10 to-transparent"></div>
+        ${imgs.length > 1 ? `<div class="absolute bottom-3 inset-x-0 flex justify-center gap-1.5">${imgs.map((_, i) => `<span class="raffle-dot dot ${i === 0 ? 'active' : ''}"></span>`).join('')}</div>` : ''}
+        <span class="absolute top-3 left-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Sorteio</span>
+        <span class="absolute top-3 right-3 rounded-full bg-obsidian/70 backdrop-blur px-2.5 py-1 text-[10px] uppercase tracking-[0.15em] text-sand">+ Travesseiro de brinde</span>
+      </div>
+      <div class="p-5 pt-2">
+        <h2 class="font-serif text-2xl text-sand">${esc(r.title)}</h2>
+        <p class="mt-2 text-beige font-medium">${esc(r.prize)}</p>
+        <p class="mt-3 text-sm leading-relaxed text-smoke">${esc(r.text)}</p>
+        <p class="mt-5 text-[11px] uppercase tracking-[0.25em] text-gold">Como participar</p>
+        <ol class="mt-3 space-y-2.5">
+          ${r.steps.map((s, i) => `
+            <li class="flex items-start gap-3">
+              <span class="shrink-0 grid place-items-center w-6 h-6 rounded-full border border-gold/50 text-[11px] text-gold">${i + 1}</span>
+              <span class="text-sm text-beige/90 leading-snug pt-0.5">${esc(s)}</span>
+            </li>`).join('')}
+        </ol>
+        <p class="mt-5 text-xs text-smoke">Data do sorteio: <span class="text-sand">${esc(when)}</span></p>
+      </div>`;
+
+    // Alterna as fotos (peça Vellar ↔ travesseiros) a cada 4 s, com fade
+    const slides = $$('.raffle-slide', $('#raffle'));
+    const dots = $$('.raffle-dot', $('#raffle'));
+    if (slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let cur = 0;
+      setInterval(() => {
+        if (document.hidden) return;
+        slides[cur].classList.remove('is-on'); dots[cur].classList.remove('active');
+        cur = (cur + 1) % slides.length;
+        slides[cur].classList.add('is-on'); dots[cur].classList.add('active');
+      }, 4000);
+    }
+  }
+
   function renderFeaturedPartner() {
     const p = D.featuredPartner;
-    $('#featuredPartner').innerHTML = `
-      <div class="relative aspect-[16/10] photo" style="background-image:url('${esc(p.cover)}')">
-        <span class="absolute top-3 left-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Parceiro em destaque</span>
+    const story = Array.isArray(p.story) ? p.story : [p.story];
+    const partnerWa = (msg) => (p.whatsapp ? waTo(p.whatsapp, msg) : wa(D.whatsapp.partnerMsg + p.name));
+    const highlight = p.promo && p.promo.highlight;
+
+    // Promoção em destaque: abre o card com a arte grande
+    const promoHero = highlight ? `
+      <div class="relative aspect-[3/4] photo" style="background-image:url('${esc(p.promo.image)}')" role="img" aria-label="${esc(p.promo.title)}">
+        <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-charcoal to-transparent"></div>
+        <span class="absolute bottom-4 left-4 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Parceiro em destaque · ${esc(p.name)}</span>
       </div>
+      <div class="p-5 pb-6 border-b border-sand/10">
+        <p class="text-[11px] uppercase tracking-[0.25em] text-gold">${esc(p.promo.label)}</p>
+        <!-- O título já está escrito na arte; aqui vai só o texto de apoio -->
+        <p class="mt-2 text-[15px] leading-relaxed text-beige/85">${esc(p.promo.text)}</p>
+        <a href="${partnerWa(p.promo.msg)}" target="_blank" rel="noopener" class="tap cta-shine relative overflow-hidden mt-5 flex items-center justify-center gap-2 w-full rounded-full bg-sand py-3.5 text-sm font-semibold text-obsidian hover:bg-gold">
+          ${icon('wa', 'w-4 h-4')} ${esc(p.promo.cta)}
+        </a>
+      </div>` : '';
+
+    const promo = p.promo && !highlight ? `
+        <div class="mt-6 rounded-2xl overflow-hidden border border-gold/40 bg-gradient-to-br from-gold/15 to-transparent">
+          ${p.promo.image ? `<div class="aspect-[16/10] photo" style="background-image:url('${esc(p.promo.image)}')"></div>` : ''}
+          <div class="p-4">
+            <div class="flex items-center gap-3">
+              ${p.promo.image ? '' : `<span class="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-gold/50 text-gold">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path d="M4 9c0-2 1.5-3 3-3h10c1.5 0 3 1 3 3v6c0 2-1.5 3-3 3H7c-1.5 0-3-1-3-3z"/><path d="M4 12c2.5-1 5-1 8 0s5.5 1 8 0"/></svg>
+              </span>`}
+              <div class="min-w-0">
+                <p class="text-[10px] uppercase tracking-[0.25em] text-gold">${esc(p.promo.label)}</p>
+                <p class="font-serif text-lg leading-tight text-sand">${esc(p.promo.title)}</p>
+              </div>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-beige/80">${esc(p.promo.text)}</p>
+            <a href="${partnerWa(p.promo.msg)}" target="_blank" rel="noopener" class="tap mt-4 flex items-center justify-center gap-2 w-full rounded-full bg-sand py-3 text-xs font-semibold uppercase tracking-[0.15em] text-obsidian hover:bg-gold">
+              ${icon('wa', 'w-3.5 h-3.5')} ${esc(p.promo.cta)}
+            </a>
+          </div>
+        </div>` : '';
+
+    $('#featuredPartner').innerHTML = `
+      ${promoHero}
+      ${p.cover ? `<div class="relative aspect-[16/10] photo" style="background-image:url('${esc(p.cover)}')">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent"></div>
+        ${highlight ? '' : '<span class="absolute top-3 left-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Parceiro em destaque</span>'}
+      </div>` : ''}
       <div class="p-5">
         <p class="text-[11px] uppercase tracking-[0.25em] text-gold">${esc(p.segment)}</p>
         <h3 class="mt-2 font-serif text-2xl text-sand">${esc(p.name)}</h3>
-        <p class="mt-1 text-xs text-smoke">${esc(p.city)}</p>
-        <p class="mt-4 text-sm leading-relaxed text-beige/80">${esc(p.story)}</p>
-        <ul class="mt-5 space-y-2.5">
+        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ', ' + p.city)}" target="_blank" rel="noopener" class="mt-1 inline-block text-xs text-smoke underline underline-offset-4 decoration-smoke/40">${esc(p.city)}</a>
+        ${p.aboutTitle ? `<p class="mt-5 text-[11px] uppercase tracking-[0.25em] text-gold">${esc(p.aboutTitle)}</p>` : ''}
+        ${story.map((s, i) => `<p class="mt-2 ${i ? 'text-sm text-beige/70' : 'text-[15px] text-beige/90'} leading-relaxed">${esc(s)}</p>`).join('')}
+        ${promo}
+        <p class="mt-6 text-[11px] uppercase tracking-[0.25em] text-gold">Benefícios para membros</p>
+        <ul class="mt-3 space-y-2.5">
           ${p.perks.map((k) => `
             <li class="flex items-start gap-3 rounded-xl border border-sand/10 bg-obsidian/40 p-3">
               ${tierBadge(k.tier)}
@@ -206,9 +305,14 @@
               </div>
             </li>`).join('')}
         </ul>
-        <a href="${wa(D.whatsapp.partnerMsg + p.name)}" target="_blank" rel="noopener" class="tap mt-5 flex items-center justify-center gap-2 w-full rounded-full border border-sand/25 py-3 text-xs uppercase tracking-[0.2em] text-sand hover:bg-sand hover:text-obsidian">
-          Quero esse benefício
-        </a>
+        <div class="mt-5 grid ${p.instagram ? 'grid-cols-2' : 'grid-cols-1'} gap-2">
+          <a href="${partnerWa(p.msg || D.whatsapp.partnerMsg + p.name)}" target="_blank" rel="noopener" class="tap flex items-center justify-center gap-2 rounded-full border border-sand/25 py-3 text-[11px] uppercase tracking-[0.15em] text-sand hover:bg-sand hover:text-obsidian">
+            ${icon('wa', 'w-3.5 h-3.5')} WhatsApp
+          </a>
+          ${p.instagram ? `<a href="${esc(p.instagram)}" target="_blank" rel="noopener" class="tap flex items-center justify-center gap-2 rounded-full border border-sand/25 py-3 text-[11px] uppercase tracking-[0.15em] text-sand hover:bg-sand hover:text-obsidian">
+            ${icon('ig', 'w-3.5 h-3.5')} Instagram
+          </a>` : ''}
+        </div>
       </div>`;
   }
 
@@ -359,6 +463,7 @@
   renderAbout();
   renderContents();
   renderBastidores();
+  renderRaffle();
   renderFeaturedPartner();
   renderPromos();
   renderLinks();

@@ -59,6 +59,10 @@ body { overflow-x: hidden; }
 .tier-BLACK  { color: #F4EFEA; border-color: #F4EFEA; background: #0D0D0D; }
 .tier-PRIME  { color: #0D0D0D; border-color: transparent; background: linear-gradient(120deg, #F3DEB0, #C5A880 55%, #E8CC92); }
 
+/* Sorteio: fotos que se alternam com fade */
+.raffle-slide { opacity: 0; transform: scale(1.04); transition: opacity 1.2s ease, transform 6s ease; }
+.raffle-slide.is-on { opacity: 1; transform: scale(1); }
+
 /* Conteúdos bloqueados */
 .content-card.is-locked [data-media] { filter: grayscale(.6) brightness(.7); }
 .content-card, .reel-card, .link-row { transition: transform .35s ease, border-color .35s ease; }
