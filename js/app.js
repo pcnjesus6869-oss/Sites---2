@@ -413,7 +413,7 @@
     $('#promoTrack').innerHTML = P.items.map((p) => `
       <article class="product-card snap-start shrink-0 w-[66%] max-w-[250px] rounded-2xl border border-sand/10 bg-charcoal overflow-hidden">
         <div data-media class="relative aspect-[4/5] overflow-hidden">
-          <div class="photo absolute inset-0" style="background-image:url('${esc(p.image)}')${p.zoom ? `;background-size:${esc(p.zoom)}` : ''}"></div>
+          <div class="photo absolute inset-0" style="background-image:url('${esc(p.image)}')${p.zoom ? `;background-size:${esc(p.zoom)}` : ''}${p.position ? `;background-position:${esc(p.position)}` : ''}"></div>
           <span class="absolute top-3 left-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-obsidian">${esc(p.badge)}</span>
           <span class="absolute bottom-3 left-3 rounded-full bg-obsidian/70 backdrop-blur px-2.5 py-1 text-[10px] uppercase tracking-[0.15em] text-sand">Exclusivo QR Code</span>
         </div>

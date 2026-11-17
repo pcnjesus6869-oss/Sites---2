@@ -191,11 +191,13 @@ window.VELLAR = {
     // Brincos enviados pelo usuário (17/11). Todos: de R$ 80,00 por R$ 60,00 (-25%).
     // Nomes, cupons e materiais são EXEMPLO — confirmar com a Vellar.
     // zoom (opcional): aproxima a foto no card, ex.: '170%' para peças pequenas.
+    // position (opcional): parte da foto que fica no centro, ex.: 'center 55%'.
     items: [
       { name: 'Brinco Mosaico', material: 'Banho de ouro 18k',             from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRMOSAICO', image: 'assets/img/produtos/brinco-mosaico.webp', zoom: '170%' },
       { name: 'Brinco Orvalho', material: 'Banho de ouro 18k · zircônia',  from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRORVALHO', image: 'assets/img/produtos/brinco-orvalho.webp', zoom: '170%' },
       { name: 'Brinco Folha',   material: 'Banho de ouro 18k',             from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRFOLHA',   image: 'assets/img/produtos/brinco-folha.webp' },
       { name: 'Brinco Cristal', material: 'Banho de ouro 18k · zircônia',  from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRCRISTAL', image: 'assets/img/produtos/brinco-cristal.webp' },
+      { name: 'Brinco Trama',   material: 'Banho de ouro 18k',             from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRTRAMA',   image: 'assets/img/produtos/brinco-trama.jpg', zoom: '150%', position: 'center 55%' }, // nome EXEMPLO (enviado 17/11)
     ],
   },
 
