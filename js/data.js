@@ -14,7 +14,11 @@ window.VELLAR = {
   },
 
   // Aparecem como botões no rodapé. Deixe url vazia ('') para esconder um item.
+  // Convite do grupo de WhatsApp da Comunidade Vellar (enviado em 17/11). Usado no Sobre nós, no rodapé e no bloco de comunidades.
+  groupInvite: 'https://chat.whatsapp.com/J9jnc1XCCNj2lXc7IY6wfJ',
+
   links: [
+    { icon: 'wa',  label: 'Grupo da Comunidade Vellar', detail: 'Entre no grupo do WhatsApp', url: 'group' },
     { icon: 'wa',  label: 'Concierge no WhatsApp', detail: 'Garantia, trocas e cuidados', url: 'whatsapp' },
     { icon: 'ig',  label: '@vellar.semijoias',      detail: 'Coleções e lançamentos',    url: 'https://www.instagram.com/vellar.semijoias/' },
     { icon: 'ig',  label: '@comunidadevellar',      detail: 'Bastidores e comunidade',   url: 'https://www.instagram.com/comunidadevellar/' },
@@ -45,6 +49,7 @@ window.VELLAR = {
         title: 'Uma rede para crescer junto',
         text: 'Um ambiente que conecta pessoas, marcas, empresas e empreendedores. Pelo Instagram e pelos grupos de WhatsApp, compartilhamos conhecimento, divulgamos parceiros e criamos oportunidades, em uma rede onde todos contribuem e evoluem.',
         tags: ['Saúde', 'Bem-estar', 'Psicologia', 'Desenvolvimento pessoal', 'Propósito de vida', 'Empreendedorismo'],
+        cta: { label: 'Entrar no grupo da Comunidade', url: 'group' },   // url 'group' = groupInvite
       },
     ],
   },
@@ -163,7 +168,7 @@ window.VELLAR = {
   communities: {
     masculina: {
       tags: 'Esporte · Academia · Gastronomia · Barbearias · Carros · Eventos',
-      groupLink: 'https://wa.me/5547999728395?text=' + encodeURIComponent('Olá! Quero entrar na Comunidade Masculina Vellar.'), // troque pelo convite do grupo quando existir
+      groupLink: 'https://chat.whatsapp.com/J9jnc1XCCNj2lXc7IY6wfJ', // grupo da Comunidade Vellar
       benefits: [
         { category: 'Barbearia',   partner: 'Barbearia Navalha', type: 'Desconto',          perk: '20% OFF',        detail: 'no corte + barba, de seg. a qua.', tier: 'MEMBRO' },
         { category: 'Academia',    partner: 'Academia Forja',    type: 'Experiência',       perk: 'Aula experimental', detail: 'com avaliação física',          tier: 'VIP' },
@@ -174,7 +179,7 @@ window.VELLAR = {
     },
     feminina: {
       tags: 'Beleza · Estética · Moda · Gastronomia · Bem-estar · Eventos',
-      groupLink: 'https://wa.me/5547999728395?text=' + encodeURIComponent('Olá! Quero entrar na Comunidade Feminina Vellar.'), // troque pelo convite do grupo quando existir
+      groupLink: 'https://chat.whatsapp.com/J9jnc1XCCNj2lXc7IY6wfJ', // grupo da Comunidade Vellar (mesmo grupo por enquanto)
       benefits: [
         { category: 'Estética',    partner: 'Studio Lumière', type: 'Desconto',          perk: '20% OFF',       detail: 'em limpeza de pele',             tier: 'MEMBRO' },
         { category: 'Bem-estar',   partner: 'Spa Essência',   type: 'Experiência',       perk: 'Ritual relaxante', detail: 'exclusivo para membras',      tier: 'BLACK' },

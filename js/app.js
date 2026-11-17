@@ -6,6 +6,8 @@
   const wa = (msg) => `https://wa.me/${D.whatsapp.number}?text=${encodeURIComponent(msg)}`;
   const icon = (id, cls = 'w-4 h-4') => `<svg class="${cls}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-${id}"/></svg>`;
   const today = new Date();
+  // 'group' = convite do grupo (VELLAR.groupInvite); 'whatsapp' = conversa com o Concierge
+  const linkTo = (u) => (u === 'group' ? D.groupInvite : u === 'whatsapp' ? wa(D.whatsapp.conciergeMsg) : u);
 
   /* ---------- Toast ---------- */
   let toastTimer;
@@ -29,6 +31,7 @@
         ${b.title ? `<h3 class="mt-2 font-serif text-lg text-sand">${esc(b.title)}</h3>` : ''}
         <p class="mt-2 text-[15px] leading-relaxed text-beige/80">${esc(b.text)}</p>
         ${b.tags ? `<div class="mt-4 flex flex-wrap gap-1.5">${b.tags.map((t) => `<span class="rounded-full border border-gold/30 px-2.5 py-1 text-[11px] text-sand">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${b.cta && linkTo(b.cta.url) ? `<a href="${esc(linkTo(b.cta.url))}" target="_blank" rel="noopener" class="tap cta-shine relative overflow-hidden mt-5 flex items-center justify-center gap-2.5 w-full rounded-full bg-sand py-3.5 text-sm font-semibold text-obsidian hover:bg-gold">${icon('wa', 'w-4 h-4')} ${esc(b.cta.label)}</a>` : ''}
       </article>`).join('');
     const box = $('#aboutPlayer');
     if (a.type === 'video') renderVideoPlayer(box, a); else renderAudioPlayer(box, a);
@@ -456,8 +459,8 @@
 
   /* ================= 6. LINKS ================= */
   function renderLinks() {
-    $('#linksList').innerHTML = D.links.filter((l) => l.url).map((l) => {
-      const href = l.url === 'whatsapp' ? wa(D.whatsapp.conciergeMsg) : l.url;
+    $('#linksList').innerHTML = D.links.filter((l) => linkTo(l.url)).map((l) => {
+      const href = linkTo(l.url);
       const main = l.icon === 'wa';
       return `
         <a href="${esc(href)}" target="_blank" rel="noopener" class="link-row tap flex items-center gap-4 rounded-2xl border ${main ? 'border-gold/50 bg-gold/10' : 'border-sand/10 bg-charcoal'} px-4 py-3.5">

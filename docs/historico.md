@@ -34,3 +34,4 @@
 - `dev-server.js` passou a enviar arquivos em partes (Range), como o Netlify: permite avançar o vídeo e tocar no Safari/iPhone durante os testes locais.
 - A confirmar: quem fala no vídeo é uma mulher, mas o subtítulo da seção ainda diz "Thiago Alves · fundador" (não alterado; nome dela não informado).
 - Depois: novo brinco **Trama** (nome EXEMPLO, cupom QRTRAMA, R$ 80,00 → R$ 60,00) em `assets/img/produtos/brinco-trama.jpg`, com `zoom` e novo campo opcional `position` por produto. Publicado em Sites---2 e em `Sites-1/vellarsemijoias/` (via clone temporário).
+- **Grupo do WhatsApp:** convite real `VELLAR.groupInvite` (chat.whatsapp.com). Botão "Entrar no grupo da Comunidade" no bloco Comunidade Vellar (Sobre nós, campo `cta` nos `about.blocks`) e item "Grupo da Comunidade Vellar" no topo dos links do rodapé (`url: 'group'`). `groupLink` das comunidades (oculto) também aponta para ele. Local, ainda não publicado.
