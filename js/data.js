@@ -26,9 +26,10 @@ window.VELLAR = {
    * type: 'audio' para MP3 ou 'video' para MP4.
    * Coloque o arquivo em assets/media/ e aponte o caminho em src.      */
   about: {
-    type: 'audio',                         // 'audio' | 'video'
-    src: 'assets/media/sobre-nos.mp3',     // ex.: 'assets/media/sobre-nos.mp4' com type: 'video'
-    poster: 'assets/img/campanha-poster.svg', // capa usada quando type for 'video'
+    type: 'video',                         // 'audio' | 'video'
+    src: 'assets/media/sobre-nos.mp4',     // vídeo vertical (464×832) enviado em 17/11. Áudio antigo: 'assets/media/sobre-nos.mp3'
+    poster: 'assets/img/sobre-nos-capa.jpg',  // capa = quadro do próprio vídeo (antes: campanha-poster.svg)
+    ratio: '9/16',                         // formato do vídeo: '9/16' (vertical, celular) ou '16/9' (horizontal)
     title: 'Quem está por trás da Vellar',
     subtitle: 'Thiago Alves · fundador',
     label: 'Uma mensagem para você',
@@ -63,6 +64,26 @@ window.VELLAR = {
       { week: 'Semana 4', stage: 'Conceito',        title: 'Eu transformei tudo isso em algo que quero carregar comigo.', format: 'Vídeo · 5 min', release: '2026-12-03', url: '' },
       { week: 'Fim do ciclo', stage: 'Lançamento',  title: 'Coleção Foco', format: 'Acesso antecipado para membros', release: '2026-12-10', url: '' },
     ],
+
+    // Artigos em menu suspenso (abaixo dos cards). Cada artigo abre e fecha ao tocar.
+    // blocks: { h: 'subtítulo' } ou { p: 'parágrafo' }. quote = frase de destaque no fim.
+    articles: [
+      {
+        label: 'Artigo exclusivo',
+        title: 'Originalidade',
+        author: 'Thiago Alves Moreira',
+        readTime: '2 min de leitura',
+        blocks: [
+          { h: 'A originalidade como liberdade individual' },
+          { p: 'A sociedade criou um modelo de vida que tenta determinar como devemos pensar, agir, trabalhar e até mesmo cuidar do nosso corpo. Quando se fala em desenvolvimento pessoal, quase sempre aparecem os mesmos discursos: academia, fitness, disciplina, produtividade e uma rotina perfeitamente organizada. Mas quem disse que esse é o caminho para a genialidade?' },
+          { p: 'Grandes pensadores como Kant, Marx, Hegel e Schopenhauer possuíam personalidades, hábitos e maneiras de viver completamente particulares. Muitos intelectuais e artistas de outras épocas tinham seus próprios excessos, apreciavam conhaque, uísque, charutos, cigarro e viviam distantes dos padrões que hoje são vendidos como ideais. Isso não significa que seus hábitos devam ser reproduzidos, mas demonstra que a genialidade nunca teve uma aparência única.' },
+          { p: 'Se você gosta de fumar um charuto, essa é uma escolha sua. Se gosta de determinada bebida, de determinados ambientes ou possui uma maneira diferente de organizar sua vida, isso não determina sua capacidade intelectual. O problema começa quando você deixa de ser quem é para tentar reproduzir uma personalidade que alguém vendeu como perfeita.' },
+          { p: 'A vida não é uma estrutura perfeitamente organizada. É contradição, instabilidade, movimento e transformação. É um caos que, de alguma maneira, também produz suas próprias formas de equilíbrio. A mente humana funciona dentro dessa complexidade, e talvez seja justamente nesse espaço que encontramos nossa maior originalidade.' },
+          { p: 'Não existe uma fórmula universal para ser inteligente, criativo ou extraordinário. Existe a possibilidade de conhecer a si mesmo, desenvolver suas ideias e construir sua própria trajetória sem precisar imitar os padrões de comportamento que a sociedade estabelece.' },
+        ],
+        quote: 'A originalidade não está em seguir um modelo de vida. Está em ter coragem de ser aquilo que você é.',
+      },
+    ],
   },
 
   /* ---------- 3. Bastidores (Instagram @comunidadevellar) ----------
@@ -90,7 +111,7 @@ window.VELLAR = {
     // Fotos que se alternam no card (a cada 4 s). position = parte da foto que aparece.
     images: [
       { src: 'assets/img/produtos/colar-ponto-de-luz.jpg', position: 'center' },   // EXEMPLO — trocar pela peça sorteada
-      { src: 'assets/img/parceiros/promo-travesseiros.jpg', position: 'center 80%' }, // enquadra só os travesseiros
+      { src: 'assets/img/parceiros/travesseiro-criare.jpg', position: 'center' },   // foto do travesseiro (recortada em 4:3)
     ],
     // O sorteio acontece somente pelo Instagram (sem botão de WhatsApp).
     drawDate: '',                          // AAAA-MM-DD; vazio = mostra drawNote
@@ -124,7 +145,7 @@ window.VELLAR = {
       label: 'Promoção exclusiva para membros',
       title: 'Travesseiro não é tudo igual. É tudo pessoal.',
       text: 'Descubra qual é o seu tipo de descanso e qual travesseiro foi feito pra você. Membros da Comunidade Vellar têm condição especial em travesseiros na Criare.',
-      image: 'assets/img/parceiros/promo-travesseiros.jpg',
+      image: 'assets/img/parceiros/travesseiro-criare.jpg',   // antes: promo-travesseiros.jpg (arte da Criare, guardada sem uso)
       cta: 'Consultar condição',
       msg: 'Olá! Sou membro da Comunidade Vellar e quero saber da promoção de travesseiros.',
     },
@@ -136,6 +157,9 @@ window.VELLAR = {
 
   // type: Desconto | Brinde | Sorteio | Experiência | Evento | Acesso antecipado
   // tier: MEMBRO | VIP | BLACK | PRIME
+  // "Mais parceiros na sua comunidade" (seletor Masculina/Feminina + botão do grupo).
+  // GUARDADO para usar mais para frente: false = escondido no site; true = volta a aparecer.
+  showCommunities: false,
   communities: {
     masculina: {
       tags: 'Esporte · Academia · Gastronomia · Barbearias · Carros · Eventos',
@@ -164,14 +188,25 @@ window.VELLAR = {
   /* ---------- 5. Promoções exclusivas do QR Code (Vellar Semijoias) ---------- */
   promotions: {
     endsAt: '2026-11-30T23:59:59-03:00',  // fim da campanha (contagem regressiva)
-    // Fotos reais do Instagram @vellar.semijoias (em assets/img/produtos/).
-    // Nomes, materiais, preços e cupons são EXEMPLOS — ajustar para o catálogo real.
+    // Brincos enviados pelo usuário (17/11). Todos: de R$ 80,00 por R$ 60,00 (-25%).
+    // Nomes, cupons e materiais são EXEMPLO — confirmar com a Vellar.
+    // zoom (opcional): aproxima a foto no card, ex.: '170%' para peças pequenas.
     items: [
-      { name: 'Colar Ponto de Luz',     material: 'Banho de ouro 18k · zircônia', from: 'R$ 189', price: 'R$ 149', badge: '-20%',  coupon: 'QRPONTODELUZ', image: 'assets/img/produtos/colar-ponto-de-luz.jpg' },
-      { name: 'Anéis Dourados',         material: 'Banho de ouro 18k',            from: 'R$ 159', price: 'R$ 129', badge: '-20%',  coupon: 'QRANEIS',     image: 'assets/img/produtos/aneis-dourados.jpg' },
-      { name: 'Argola Cravejada',       material: 'Banho de ouro 18k · zircônias', from: 'R$ 139', price: 'R$ 139', badge: 'Brinde', note: 'Ganhe um anel na compra', coupon: 'QRARGOLA', image: 'assets/img/produtos/argola-cravejada.jpg' },
-      { name: 'Brinco Flor',            material: 'Banho de ouro 18k',            from: 'R$ 119', price: 'R$ 89',  badge: '-25%',  coupon: 'QRFLOR',      image: 'assets/img/produtos/brinco-flor.jpg' },
-      { name: 'Corrente Elos',          material: 'Banho de ouro 18k',            from: 'R$ 229', price: 'R$ 199', badge: 'Frete grátis', coupon: 'QRELOS', image: 'assets/img/produtos/corrente-elos.jpg' },
+      { name: 'Brinco Mosaico', material: 'Banho de ouro 18k',             from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRMOSAICO', image: 'assets/img/produtos/brinco-mosaico.webp', zoom: '170%' },
+      { name: 'Brinco Orvalho', material: 'Banho de ouro 18k · zircônia',  from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRORVALHO', image: 'assets/img/produtos/brinco-orvalho.webp', zoom: '170%' },
+      { name: 'Brinco Folha',   material: 'Banho de ouro 18k',             from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRFOLHA',   image: 'assets/img/produtos/brinco-folha.webp' },
+      { name: 'Brinco Cristal', material: 'Banho de ouro 18k · zircônia',  from: 'R$ 80,00', price: 'R$ 60,00', badge: '-25%', coupon: 'QRCRISTAL', image: 'assets/img/produtos/brinco-cristal.webp' },
     ],
   },
+
+  // GUARDADO para usar depois: produtos que estavam em "Só para quem escaneou" até 17/11.
+  // Não aparecem no site. Para reutilizar, copie o item para promotions.items acima.
+  // Fotos reais do Instagram @vellar.semijoias; preços e cupons eram EXEMPLO.
+  promotionsArchive: [
+    { name: 'Colar Ponto de Luz',     material: 'Banho de ouro 18k · zircônia', from: 'R$ 189', price: 'R$ 149', badge: '-20%',  coupon: 'QRPONTODELUZ', image: 'assets/img/produtos/colar-ponto-de-luz.jpg' },
+    { name: 'Anéis Dourados',         material: 'Banho de ouro 18k',            from: 'R$ 159', price: 'R$ 129', badge: '-20%',  coupon: 'QRANEIS',     image: 'assets/img/produtos/aneis-dourados.jpg' },
+    { name: 'Argola Cravejada',       material: 'Banho de ouro 18k · zircônias', from: 'R$ 139', price: 'R$ 139', badge: 'Brinde', note: 'Ganhe um anel na compra', coupon: 'QRARGOLA', image: 'assets/img/produtos/argola-cravejada.jpg' },
+    { name: 'Brinco Flor',            material: 'Banho de ouro 18k',            from: 'R$ 119', price: 'R$ 89',  badge: '-25%',  coupon: 'QRFLOR',      image: 'assets/img/produtos/brinco-flor.jpg' },
+    { name: 'Corrente Elos',          material: 'Banho de ouro 18k',            from: 'R$ 229', price: 'R$ 199', badge: 'Frete grátis', coupon: 'QRELOS', image: 'assets/img/produtos/corrente-elos.jpg' },
+  ],
 };

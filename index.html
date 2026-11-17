@@ -89,6 +89,8 @@
       <div class="carousel-wrap relative mt-6">
         <div id="contentTrack" class="carousel flex gap-4 overflow-x-auto px-6 pb-4 snap-x snap-mandatory"></div>
       </div>
+      <!-- Artigos em menu suspenso (VELLAR.contents.articles) -->
+      <div id="contentArticles" class="px-6 max-w-xl mx-auto mt-6 space-y-3"></div>
     </section>
 
     <!-- ================= 3. BASTIDORES (Instagram) ================= -->
@@ -122,6 +124,11 @@
         <!-- Parceiro em destaque -->
         <article id="featuredPartner" class="reveal mt-8 rounded-2xl overflow-hidden border border-gold/25 bg-charcoal"></article>
 
+      </div>
+
+      <!-- "Mais parceiros na sua comunidade": GUARDADO. Aparece só com VELLAR.showCommunities = true (js/data.js) -->
+      <div id="communitiesBlock" hidden>
+      <div class="px-6 max-w-xl mx-auto">
         <!-- Seletor de comunidade -->
         <h3 class="reveal mt-12 font-serif text-lg text-sand">Mais parceiros na sua comunidade</h3>
         <div class="reveal mt-4 relative grid grid-cols-2 rounded-full border border-sand/15 bg-charcoal p-1" role="tablist">
@@ -143,6 +150,7 @@
           <span>Entrar na Comunidade no WhatsApp</span>
         </a>
       </div>
+      </div><!-- /communitiesBlock -->
     </section>
 
     <!-- ================= 5. PROMOÇÕES EXCLUSIVAS (QR Code) ================= -->

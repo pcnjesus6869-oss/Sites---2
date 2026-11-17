@@ -97,3 +97,12 @@ O Netlify publica automaticamente o repo **Sites-1** (https://github.com/pcnjesu
 - Imagens novas em `assets/img/parceiros/`: `promo-travesseiros.jpg` (arte enviada pela Criare) e `criare-colchao-cloud.webp` (foto da vitrine da Criare, hoje sem uso).
 - **O Sites---2 está à frente do site publicado**: nesta etapa o usuário pediu para NÃO mexer no Sites-1 (Criare). A seção "Publicação (Netlify)" acima continua válida como procedimento, mas só deve ser feita com pedido explícito.
 - Pendências novas: confirmar a peça do sorteio (hoje Colar Ponto de Luz, exemplo), data do sorteio, datas reais dos conteúdos de Psicologia. "Mais parceiros na sua comunidade" ainda tem parceiros fictícios. `assets/img/parceiro-casa-oficio.svg` ficou sem uso.
+
+## Atualização 17/11/2026
+- **Sobre nós agora é vídeo** (`about.type: 'video'`, `assets/media/sobre-nos.mp4`, vertical 9:16, capa `assets/img/sobre-nos-capa.jpg`). A pendência "arquivo do Sobre nós" deixou de valer. Novo campo `about.ratio`. **A confirmar:** quem fala no vídeo é uma mulher, mas o subtítulo ainda diz "Thiago Alves · fundador".
+- **Conteúdos exclusivos:** artigos em menu suspenso, em `contents.articles` (1º: "Originalidade", Thiago Alves Moreira).
+- **Travesseiros:** foto nova `assets/img/parceiros/travesseiro-criare.jpg` no sorteio e no card da Criare (`promo-travesseiros.jpg` guardada sem uso).
+- **"Mais parceiros na sua comunidade"** (seletor + botão do grupo) escondido: `showCommunities: false` em `data.js`. Dados guardados.
+- **Promoções:** 4 brincos (Mosaico, Orvalho, Folha, Cristal), R$ 80,00 → R$ 60,00, cupons QR+nome. Nomes Folha/Cristal e materiais a confirmar. Produtos antigos guardados em `promotionsArchive`. Campo opcional `zoom` por produto.
+- `dev-server.js` agora suporta Range (vídeo avança e toca no Safari).
+- **Publicação:** a pasta local `D:\Projetos-Claude\Criare-Colchoes` está atrás do `origin/main` do Sites-1 e tem alterações da Criare não commitadas. Para publicar o Vellar, usar um **clone temporário** do Sites-1 e alterar só `vellarsemijoias/` (não usar a pasta da Criare).

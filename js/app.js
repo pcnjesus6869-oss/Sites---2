@@ -96,31 +96,46 @@
   }
 
   function renderVideoPlayer(box, a) {
+    // Formato do vídeo (ex.: '9/16' vertical). Vertical: ocupa a largura no celular,
+    // mas nunca passa de ~78% da altura da tela (cabe inteiro no aparelho e no computador).
+    const [rw, rh] = String(a.ratio || '16/9').split('/').map(Number);
+    const vertical = rh > rw;
+    const size = vertical
+      ? `aspect-ratio:${rw}/${rh};width:min(100%, calc(78svh * ${rw} / ${rh}))`
+      : `aspect-ratio:${rw}/${rh};width:100%`;
     box.innerHTML = `
-      <div class="relative aspect-[4/5] sm:aspect-video rounded-2xl overflow-hidden border border-sand/10 bg-charcoal">
+      <div class="video-frame relative mx-auto rounded-2xl overflow-hidden border border-sand/10 bg-obsidian shadow-2xl" style="${size}">
         <video class="absolute inset-0 w-full h-full object-cover" playsinline preload="metadata" poster="${esc(a.poster)}" src="${esc(a.src)}"></video>
-        <div data-cover class="absolute inset-0 photo flex flex-col justify-end p-5" style="background-image:url('${esc(a.poster)}')">
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent"></div>
-          <button data-play class="tap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-16 h-16 rounded-full border border-sand/40 bg-obsidian/40 backdrop-blur text-sand" aria-label="Assistir vídeo">
+        <div data-cover class="absolute inset-0 photo flex flex-col justify-end p-5 cursor-pointer" style="background-image:url('${esc(a.poster)}')">
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-obsidian/10"></div>
+          <button data-play class="tap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 grid place-items-center w-16 h-16 rounded-full border border-sand/50 bg-obsidian/50 backdrop-blur text-sand" aria-label="Assistir vídeo">
             ${icon('play', 'w-6 h-6 ml-1')}
           </button>
-          <div class="relative">
-            <p class="font-serif text-lg text-sand">${esc(a.label)}</p>
-            <p class="text-xs text-smoke mt-1">${esc(a.subtitle)}</p>
+          <div class="relative flex items-end justify-between gap-3">
+            <p class="font-serif text-lg leading-tight text-sand">${esc(a.label)}</p>
+            <span data-dur class="shrink-0 rounded-full bg-obsidian/60 backdrop-blur px-2.5 py-1 text-[11px] tabular-nums text-sand/90"></span>
           </div>
         </div>
       </div>`;
     const video = $('video', box);
-    $('[data-play]', box).addEventListener('click', async () => {
+    const cover = $('[data-cover]', box);
+    video.addEventListener('loadedmetadata', () => {
+      const s = Math.round(video.duration || 0);
+      if (s) $('[data-dur]', box).textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    });
+    const start = async () => {
       try {
         video.controls = true;
         await video.play();
-        $('[data-cover]', box).classList.add('hidden');
+        cover.classList.add('hidden');
       } catch {
         video.controls = false;
-        toast('Prévia: adicione o MP4 em assets/media');
+        toast('Não foi possível tocar o vídeo');
       }
-    });
+    };
+    cover.addEventListener('click', start);
+    // Ao terminar, volta a capa
+    video.addEventListener('ended', () => { video.controls = false; video.currentTime = 0; cover.classList.remove('hidden'); });
   }
 
   /* ================= 2. CONTEÚDOS EXCLUSIVOS ================= */
@@ -158,6 +173,52 @@
       if (b.dataset.open !== 'true') return toast(`Este conteúdo libera em ${b.dataset.when}`);
       if (b.dataset.url) window.open(b.dataset.url, '_blank', 'noopener');
       else toast('Link do conteúdo ainda não configurado');
+    });
+
+    renderArticles(c.articles || []);
+  }
+
+  // Artigos: menu suspenso que abre o texto formatado como página
+  function renderArticles(list) {
+    const box = $('#contentArticles');
+    if (!list.length) { box.remove(); return; }
+    box.innerHTML = list.map((a) => `
+      <details class="article reveal rounded-2xl border border-sand/10 bg-charcoal overflow-hidden">
+        <summary class="tap flex items-center gap-4 p-5 cursor-pointer select-none">
+          <span class="shrink-0 grid place-items-center w-11 h-11 rounded-full border border-gold/40 text-gold">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[10px] uppercase tracking-[0.25em] text-gold">${esc(a.label || 'Artigo')}</span>
+            <span class="block mt-1 font-serif text-lg leading-tight text-sand">${esc(a.title)}</span>
+            <span class="block mt-1 text-xs text-smoke">${esc(a.author)}${a.readTime ? ' · ' + esc(a.readTime) : ''}</span>
+          </span>
+          <svg class="article-chevron shrink-0 w-5 h-5 text-sand/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="article-body px-6 pb-8 pt-2 border-t border-sand/10">
+          <header class="pt-6 text-center">
+            <p class="text-[10px] uppercase tracking-[0.35em] text-gold">Comunidade Vellar</p>
+            <h3 class="mt-3 font-serif text-[22px] sm:text-3xl tracking-[0.08em] sm:tracking-[0.15em] text-sand break-words">${esc(a.title).toUpperCase()}</h3>
+            <p class="mt-3 text-xs italic text-smoke">Por ${esc(a.author)}</p>
+            <span class="block mx-auto mt-5 w-10 h-px bg-gold/60"></span>
+          </header>
+          <div class="mt-6">
+            ${a.blocks.map((b) => b.h
+              ? `<h4 class="mt-6 first:mt-0 font-serif text-lg text-sand">${esc(b.h)}</h4>`
+              : `<p class="article-p mt-4 text-[15px] leading-[1.75] text-beige/85">${esc(b.p)}</p>`).join('')}
+          </div>
+          ${a.quote ? `<blockquote class="mt-8 border-l-2 border-gold pl-4 font-serif text-lg italic leading-snug text-sand">${esc(a.quote)}</blockquote>` : ''}
+          <p class="mt-6 text-right text-xs italic text-smoke">— ${esc(a.author)}</p>
+          <button type="button" class="article-close tap mt-8 w-full rounded-full border border-sand/20 py-2.5 text-xs uppercase tracking-[0.2em] text-sand hover:bg-sand hover:text-obsidian">Fechar artigo</button>
+        </div>
+      </details>`).join('');
+
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('.article-close');
+      if (!b) return;
+      const d = b.closest('details');
+      d.open = false;
+      d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   }
 
@@ -248,13 +309,13 @@
 
     // Promoção em destaque: abre o card com a arte grande
     const promoHero = highlight ? `
-      <div class="relative aspect-[3/4] photo" style="background-image:url('${esc(p.promo.image)}')" role="img" aria-label="${esc(p.promo.title)}">
+      <div class="relative aspect-[4/3] photo" style="background-image:url('${esc(p.promo.image)}')" role="img" aria-label="${esc(p.promo.title)}">
         <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-charcoal to-transparent"></div>
         <span class="absolute bottom-4 left-4 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-obsidian">Parceiro em destaque · ${esc(p.name)}</span>
       </div>
       <div class="p-5 pb-6 border-b border-sand/10">
         <p class="text-[11px] uppercase tracking-[0.25em] text-gold">${esc(p.promo.label)}</p>
-        <!-- O título já está escrito na arte; aqui vai só o texto de apoio -->
+        <h3 class="mt-2 font-serif text-xl leading-snug text-sand">${esc(p.promo.title)}</h3>
         <p class="mt-2 text-[15px] leading-relaxed text-beige/85">${esc(p.promo.text)}</p>
         <a href="${partnerWa(p.promo.msg)}" target="_blank" rel="noopener" class="tap cta-shine relative overflow-hidden mt-5 flex items-center justify-center gap-2 w-full rounded-full bg-sand py-3.5 text-sm font-semibold text-obsidian hover:bg-gold">
           ${icon('wa', 'w-4 h-4')} ${esc(p.promo.cta)}
@@ -352,7 +413,7 @@
     $('#promoTrack').innerHTML = P.items.map((p) => `
       <article class="product-card snap-start shrink-0 w-[66%] max-w-[250px] rounded-2xl border border-sand/10 bg-charcoal overflow-hidden">
         <div data-media class="relative aspect-[4/5] overflow-hidden">
-          <div class="photo absolute inset-0" style="background-image:url('${esc(p.image)}')"></div>
+          <div class="photo absolute inset-0" style="background-image:url('${esc(p.image)}')${p.zoom ? `;background-size:${esc(p.zoom)}` : ''}"></div>
           <span class="absolute top-3 left-3 rounded-full bg-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-obsidian">${esc(p.badge)}</span>
           <span class="absolute bottom-3 left-3 rounded-full bg-obsidian/70 backdrop-blur px-2.5 py-1 text-[10px] uppercase tracking-[0.15em] text-sand">Exclusivo QR Code</span>
         </div>
@@ -476,6 +537,8 @@
     toast(`Benefício ${b.dataset.partner} ativado`);
   });
   $$('.seg-btn').forEach((b) => b.addEventListener('click', () => renderCommunity(b.dataset.community)));
+  // "Mais parceiros na sua comunidade" fica guardado até VELLAR.showCommunities = true
+  $('#communitiesBlock').hidden = !D.showCommunities;
   let saved = 'masculina';
   try { saved = localStorage.getItem('vellar-community') || saved; } catch {}
   renderCommunity(D.communities[saved] ? saved : 'masculina');

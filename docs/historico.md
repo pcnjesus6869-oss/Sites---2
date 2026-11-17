@@ -21,3 +21,15 @@
 - **Sobre nós**: blocos resumidos "Vellar Semijoias" e "Comunidade Vellar" (com etiquetas de temas) a partir do texto oficial enviado pelo usuário.
 - **Empresas parceiras**: Casa Ofício (fictícia) substituída pela **Criare Colchões**; promoção de travesseiros em destaque no topo do card (arte enviada pela loja, sem valores, botão para o WhatsApp da Criare); texto oficial "Sobre a Criare"; botões WhatsApp/Instagram da Criare.
 - Enviado **somente para o Sites---2**. Por pedido do usuário, o Sites-1 (Criare / site no Netlify) **não** foi alterado nesta etapa, então o site publicado ainda mostra a versão anterior.
+- Depois, a pedido do usuário: cópia atualizada em `Sites-1/vellarsemijoias/` (commit `863e127`, só arquivos dessa pasta) e publicada no Netlify. Site no ar igual ao Sites---2 (`60c2861`). Nada da Criare alterado.
+
+## 2026-11-17
+- Branch `ajustes/artigo-travesseiro` (local, sem commit/push).
+- **Travesseiros:** foto nova enviada pelo usuário, recortada em 4:3 → `assets/img/parceiros/travesseiro-criare.jpg`. Usada no sorteio e no card da Criare (card passou de 3:4 para 4:3 e agora mostra o título da promoção em texto, já que a foto não tem a arte). `promo-travesseiros.jpg` ficou guardada sem uso.
+- **Conteúdos exclusivos:** menu suspenso com o artigo "Originalidade" (Thiago Alves Moreira), formatado como página (título, autor, subtítulo, letra capitular, citação em destaque, botão "Fechar artigo"). Texto em `VELLAR.contents.articles` (`js/data.js`).
+- **"Mais parceiros na sua comunidade" escondido**, junto com o seletor Masculina/Feminina e o botão "Entrar na Comunidade no WhatsApp". Dados mantidos; para voltar: `showCommunities: true` em `js/data.js`.
+- **Promoções "Só para quem escaneou":** 4 brincos novos (fotos enviadas pelo usuário em `assets/img/produtos/brinco-*.webp`): Mosaico, Orvalho, Folha e Cristal, todos de R$ 80,00 por R$ 60,00 (-25%), cupons QRMOSAICO, QRORVALHO, QRFOLHA, QRCRISTAL. Nomes Folha e Cristal e os materiais são EXEMPLO (a confirmar). Novo campo opcional `zoom` por produto (aproxima peças pequenas no card).
+- Os 5 produtos antigos foram guardados em `VELLAR.promotionsArchive` (`js/data.js`), fora do site; fotos continuam na pasta.
+- **Sobre nós: áudio trocado por vídeo.** Vídeo enviado pelo usuário (WhatsApp, vertical 464×832, 1:41, 12,5 MB) em `assets/media/sobre-nos.mp4`; capa = quadro do próprio vídeo em `assets/img/sobre-nos-capa.jpg`. Novo campo `about.ratio` ('9/16'): o player vertical ocupa a largura no celular e no máximo ~78% da altura da tela (centralizado no computador). Capa mostra duração, some ao tocar e volta ao terminar. Para voltar ao áudio: `about.type = 'audio'`.
+- `dev-server.js` passou a enviar arquivos em partes (Range), como o Netlify: permite avançar o vídeo e tocar no Safari/iPhone durante os testes locais.
+- A confirmar: quem fala no vídeo é uma mulher, mas o subtítulo da seção ainda diz "Thiago Alves · fundador" (não alterado; nome dela não informado).
